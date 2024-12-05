@@ -1,3 +1,7 @@
+@font-face {
+  font-family: "NeueCorp";
+  src: url("../shared/fonts/PPNeueCorp-NormalUltralight.otf")
+}
 canvas {
   display: block;
 
