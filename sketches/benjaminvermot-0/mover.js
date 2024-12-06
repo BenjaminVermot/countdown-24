@@ -10,11 +10,12 @@ export default class Mover {
     this.scale = 10;
     this.color = "white";
 
-    this.targetScale = 0;
+    this.targetScale = -10;
 
     this.isOnPlace = false;
     this.isReadyToBeDestroyed = false;
     this.isScalingDown = false;
+    this.isScaledDown = false;
   }
 
   draw() {
@@ -47,6 +48,11 @@ export default class Mover {
       const force = distToTarget * springForce - this.velX * springDamping; // * this.easing.elasticInOut(this.timing);
       this.velX += force * deltaTime;
       this.scale += this.velX * deltaTime;
+    }
+
+    if (this.scale <= 0) {
+      this.scale = 0;
+      this.isScaledDown = true;
     }
   }
 

@@ -7,9 +7,16 @@ import Fire from "./fire.js";
 
 const { renderer, input, math, run, finish, audio } = createEngine();
 const { ctx, canvas } = renderer;
-run(update);
 
-// const clickSound = await audio.load("");
+const feuSound = await audio.load({
+  loop: true,
+  src: "./sounds/feu.mp3",
+});
+
+const friSound = await audio.load({
+  loop: true,
+  src: "./sounds/fri.mp3",
+});
 
 let width = window.innerWidth;
 let height = window.innerHeight;
@@ -33,6 +40,10 @@ let glacon = new Glacon(
   url
 );
 
+let feuVolume = 0.2;
+let friVolume = 0;
+
+run(update);
 setup();
 
 window.addEventListener("mousemove", (event) => {
@@ -40,7 +51,10 @@ window.addEventListener("mousemove", (event) => {
   mouseY = event.clientY * 2;
 });
 
-function setup() {}
+function setup() {
+  feuSound.play({ volume: feuVolume });
+  friSound.play({ volume: friVolume });
+}
 
 setInterval(() => {
   if (fire.isDisplayed) {
@@ -75,6 +89,9 @@ function update(dt) {
   match.draw(mouseX, mouseY);
 
   match.checkMouseDistance(mouseX, mouseY);
+  if (glacon.isShrinking) {
+    friVolume = 1;
+  }
 
   particles.forEach((element) => {
     element.draw();
@@ -101,4 +118,10 @@ function finishFunction() {
   setTimeout(() => {
     finish();
   }, 2000);
+}
+
+function calculateDistance(x1, y1, x2, y2) {
+  const dx = x2 - x1;
+  const dy = y2 - y1;
+  return Math.sqrt(dx * dx + dy * dy);
 }

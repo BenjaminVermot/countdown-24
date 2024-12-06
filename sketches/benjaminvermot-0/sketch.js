@@ -28,6 +28,8 @@ let points = []; // Liste des points à partir du SVG
 let pointsObjects = [];
 let svgLoaded = false;
 
+let number;
+
 setup();
 run(update);
 
@@ -84,6 +86,21 @@ function update(dt) {
     element.move(dt);
     element.scaleDown(dt);
   });
+
+  movers.forEach((element) => {
+    number;
+    if (element.isScaledDown) {
+      number++;
+      console.log(number);
+    }
+  });
+
+  if (number >= movers.length) {
+    finish();
+    console.log("finish");
+  } else {
+    number = 0;
+  }
 
   for (let i = 0; i <= moversAmount - 1; i++) {
     if (isClicking) {
